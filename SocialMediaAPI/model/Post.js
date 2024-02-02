@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 const UserSchema=new mongoose.Schema({
     userId:{
         type:String,
-        require:true
+        require:true,
+        immutable: true,
     },
     desc:{
         type:String,
@@ -21,4 +22,4 @@ const UserSchema=new mongoose.Schema({
 },
 {timestamps:true})
 
-export default mongoose.model("users",UserSchema)
+export default mongoose.model("Post",UserSchema)
