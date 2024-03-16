@@ -68,11 +68,50 @@ const postUpdateController=async(req,res)=>{
     }
 }
 //like post
-//get a post
-//get timeline post
+const postLikeController=async(req,res)=>{
+    try{
+    const findPost=await Post.findById(req.params.id)
+    if(!findPost.likes.includes(req.body.userId)){
+        await Post.updateOne({$push:{likes:req.body.userId}})
+        res.status(202).json('You liked the post')
+    }
+    else{
+        await Post.updateOne({$pull:{likes:req.body.userId}})
+        res.status(202).json('You disliked the post')
 
+    }
+    }
+    catch(err){
+       res.status.json(err);
+    }
+}
+
+//get a post
+const postGetController=async(req,res)=>{
+    try{
+    const findPost=await Post.findById(req.params.id)
+    res.status(200).json(findPost)
+    }
+    catch(err){
+        res.status(404).json('post not found')
+    }
+
+}
+
+//get timeline post
+const postTimlineController=async(req,res)=>{
+
+
+    try{
+        const findPost=await Post.findById(req.params.id)
+        res.status(200).json(findPost)
+        }
+        catch(err){
+            res.status(404).json('post not found')
+        }
+}
 
 export{
-    postCreateController,postUpdateController,postDeleteController
+    postCreateController,postUpdateController,postDeleteController,postLikeController,postGetController
 
 }
